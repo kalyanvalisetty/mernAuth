@@ -10,12 +10,15 @@ import userRouter from "./routes/userRoutes.js";
 
 const app = express()
 const port = process.env.PORT || 4000;
-const allowedOrigins = ['https://mernauth-jwt.onrender.com']
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({origin: allowedOrigins, credentials: true}));
+const corsOptions = {
+  origin: 'https://mernauth-jwt.onrender.com', // Allow only this origin
+  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+};
 
+app.use(cors(corsOptions));
 
 //API Endpoints
 app.get('/',(req,res)=>{
