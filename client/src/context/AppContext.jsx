@@ -2,11 +2,11 @@ import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 
+axios.defaults.withCredentials = true; // ✅ Move outside component
+
 export const AppContext = createContext();
 
 export const AppContextProvider = (props) => {
-  axios.defaults.withCredentials = true;
-
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -15,13 +15,15 @@ export const AppContextProvider = (props) => {
     try {
       const { data } = await axios.get(backendUrl + '/api/auth/is-auth');
       if (data.success) {
-        setIsLoggedin(true);
-        getUserData();
+        if (!isLoggedin) { // ✅ Only update if state changes
+          setIsLoggedin(true);
+          getUserData();
+        }
       } else {
         setIsLoggedin(false);
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response?.data?.message || "An error occurred");
       setIsLoggedin(false);
     }
   };
@@ -35,13 +37,13 @@ export const AppContextProvider = (props) => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response?.data?.message || "An error occurred");
     }
   };
 
   useEffect(() => {
     getAuthState();
-  }, []);
+  }, [backendUrl]); // ✅ Add backendUrl as a dependency
 
   const value = {
     backendUrl,
