@@ -61,7 +61,6 @@ export const logout = async(req,res)=>{
     try{
         const {userId} = req.body;
     const user = await userModel.findById(userId);
-    user.isAccountVerified = false;
     await user.save();
         res.clearCookie('token',{httpOnly: true, 
             secure: process.env.NODE_ENV === 'production', 
@@ -133,7 +132,7 @@ export const verifyEmail = async(req,res)=>{
         user.verifyOtpExpiredAt = 0;
 
         await user.save();
-        return res.json({success: true, message: "Logged In Successfully"});
+        return res.json({success: true, message: "Email Verified Successfully"});
 
     }catch(err){
         return res.json({success: false, message: err.message});
