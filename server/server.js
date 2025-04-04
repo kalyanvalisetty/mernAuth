@@ -11,7 +11,8 @@ import adminRouter from "./routes/adminRoutes.js";
 
 const app = express()
 const port = process.env.PORT || 4000;
-const allowedOrigins =  ["http://localhost:5173"]
+//const allowedOrigins =  ["http://localhost:5173"]
+const allowedOrigins =  ["https://mernauth-jwt.onrender.com"]
 
 app.use(express.json());
 app.use(cookieParser());
