@@ -29,6 +29,7 @@ const Navbar = () => {
     try{
       axios.defaults.withCredentials = true;
       const {data} = await axios.post(backendUrl + '/api/auth/logout')
+      localStorage.clear()
       data.success && setIsLoggedin(false)
       data.success && setUserData(false)
       navigate('/')
@@ -39,7 +40,7 @@ const Navbar = () => {
 
   return (
     <div className='w-full flex justify-between items-center p-4 sm:p-6 sm:px-24 absolute top-0'> 
-        <img src={assets.logo} alt="" className='w-28 sm:w-32'/>
+        <img onClick={()=>navigate('/')} src={assets.logo} alt="" className='w-28 sm:w-32'/>
         {userData?
         <div className='w-8 h-8 flex justify-center items-center rounded-full bg-black text-white relative group'>
           {userData.name[0].toUpperCase()}

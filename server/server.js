@@ -6,16 +6,18 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/database.js";
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoutes.js";
+import adminRouter from "./routes/adminRoutes.js";
 
 
 const app = express()
 const port = process.env.PORT || 4000;
+const allowedOrigins =  ["http://localhost:5173"]
 
 app.use(express.json());
 app.use(cookieParser());
 const corsOptions = {
-  origin: 'https://mernauth-jwt.onrender.com', // Allow only this origin
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  origin: allowedOrigins,
+  credentials: true, 
 };
 
 app.use(cors(corsOptions));
@@ -26,6 +28,7 @@ app.get('/',(req,res)=>{
 })
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
+app.use('/api/admin', adminRouter);
 
 connectDB()
 .then(()=>{

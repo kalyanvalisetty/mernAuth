@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 axios.defaults.withCredentials = true; // ✅ Move outside component
 
@@ -10,6 +11,7 @@ export const AppContextProvider = (props) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [userData, setUserData] = useState(null);
+  const location = useLocation();
 
   const getAuthState = async () => {
     try {
@@ -33,6 +35,7 @@ export const AppContextProvider = (props) => {
       const { data } = await axios.get(backendUrl + '/api/user/data');
       if (data.success) {
         setUserData(data.userData);
+        localStorage.setItem("user", JSON.stringify(data.userData));
       } else {
         toast.error(data.message);
       }
@@ -43,7 +46,7 @@ export const AppContextProvider = (props) => {
 
   useEffect(() => {
     getAuthState();
-  }, [backendUrl]); // ✅ Add backendUrl as a dependency
+  }, [location]);
 
   const value = {
     backendUrl,

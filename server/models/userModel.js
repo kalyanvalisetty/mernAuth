@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    role: { type: String, enum: ['user', 'admin'], default: 'user' },
     verifyOtp: {type:String, default: ''},
     verifyOtpExpiredAt: {type:Number, default: 0},
     isAccountVerified: {type:Boolean, default: false},

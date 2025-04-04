@@ -59,9 +59,6 @@ export const login = async(req, res)=>{
 
 export const logout = async(req,res)=>{
     try{
-        const {userId} = req.body;
-    const user = await userModel.findById(userId);
-    await user.save();
         res.clearCookie('token',{httpOnly: true, 
             secure: process.env.NODE_ENV === 'production', 
             sameSite: process.env.NODE_ENV === 'production'? 'none': 'lax'})

@@ -4,13 +4,13 @@ import userAuth from "../middleware/userAuth.js";
 
 const authRouter = express.Router()
 
-authRouter.post('/register', register);
-authRouter.post('/login', login);
-authRouter.post('/logout', userAuth, logout);
-authRouter.post('/send-verify-otp', userAuth, sendVerifyOtp);
-authRouter.post('/verify-account', userAuth, verifyEmail);
-authRouter.get('/is-auth', userAuth, authenticated);
-authRouter.post('/send-reset-otp', sendResetOtp);
-authRouter.post('/reset-password', resetPassword);
+authRouter.post('/register', register); //working
+authRouter.post('/login', login); //working
+authRouter.post('/logout', logout); //working
+authRouter.post('/send-verify-otp', userAuth, sendVerifyOtp);//working
+authRouter.post('/verify-account', userAuth, verifyEmail); //working
+authRouter.get('/is-auth', userAuth, authenticated); //working
+authRouter.post('/send-reset-otp', sendResetOtp); //working
+authRouter.post('/reset-password', resetPassword); //working
 
 export default authRouter
